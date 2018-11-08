@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Main from "./views/Main";
-import "./App.css";
+
+import "./App.scss";
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.fetchData()
+    // this.fetchData()
   }
 
 
@@ -22,7 +23,9 @@ class App extends Component {
     try {
       const getData = await fetch(`https://swapi.co/api/${this.state.searchType}/?search=${searchInput}`)
       const result = await getData.json()
+    
       console.log(result)
+      return result
     } catch (error) {
       console.log(error)
     }
@@ -33,8 +36,10 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Switch>
-            <Route exact path="/" component={Main} />
+          <Switch {...this.props}>
+            {/* <Route exact path="/" component={Main} /> */}
+            <Route exact path="/"  render={(props) => <Main {...props} search={ this.fetchData } />} />
+
           </Switch>
         </div>
       </Router>

@@ -1,0 +1,71 @@
+$primary-color: #ffffff;
+$border-color: #dadada;
+$shadow-color: rgba(132, 132, 132, 0.75);
+$button-color: #0ab463;
+
+
+@mixin flex-rcc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card-style {
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(132, 132, 132, 0.75);
+  border: solid 1px #dadada;
+  background-color: #ffffff;
+}
+
+
+
+.Main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  .content-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    .search-div {
+      @include card-style;
+      width: 410px;
+      height: 230px;
+      display: flex;
+      justify-content: center;
+      .search-content-wrapper {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .radio-group {
+         
+        }
+        .search-input {
+          padding-left: 10px;
+          width: 350px;
+          height: 40px;
+          border-radius: 4px;
+          box-shadow: inset 0 1px 3px 0 rgba(132, 132, 132, 0.75);
+          border: solid 1px #c4c4c4;
+          background-color: #ffffff;
+      }
+    }
+    .Ellipse {
+      width: 16px;
+      height: 16px;
+      border: solid 1px #c4c4c4;
+      background-color: #ffffff;
+    }
+  }
+    .results-div {
+      @include card-style;
+      width: 400px;
+      height: 300px;
+    }
+  }
+ 
+}
