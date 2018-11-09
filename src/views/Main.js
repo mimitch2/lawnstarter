@@ -14,9 +14,10 @@ class Main extends Component {
     }
   }
 
-  handleRadio = (e) => {
-    this.setState({searchType: e.target.value})
-    console.log(this.state.searchType)
+  handleRadio = ( type ) => {
+    this.setState({searchType: type})
+    type === "people" ? this.setState({placeholder: "e.g. Chewbacca, Yoda, Boba Fett"})
+      : this.setState({placeholder: "e.g. A New Hope, Phantom Menace"})
   }
 
   handleInput = (e) => {
@@ -31,24 +32,25 @@ class Main extends Component {
         <div className="content-wrapper">
           <div className="search-div">
             <div className="search-content-wrapper">
-              <p className="search-title">
+              <p className="What-are-you-searching-for">
                 What are you searching for?
               </p>
               <form className="radio-group">
                 <input type="radio"
                   name="type"
                   className="Ellipse"
-                  value="people" 
-                  onClick={ this.handleRadio }
+                  value={ true }
+                  defaultChecked
+                  onClick={ () => this.handleRadio("people") }
                 />
-                <label htmlFor="People">People</label>
+                <label htmlFor="People" className="People">People</label>
                 <input type="radio"
                   name="type"
                   className="Ellipse"
-                  value="movies"
-                  onClick={ this.handleRadio } 
+                  // value={ this.state.searchType }
+                  onClick={ () => this.handleRadio("films") } 
                 />
-                <label htmlFor="Movies">Movies</label>
+                <label htmlFor="Movies" className="Movies">Movies</label>
               </form>
               <input className="search-input"
                 type="search" 
@@ -56,13 +58,24 @@ class Main extends Component {
                 onChange={ this.handleInput }         
                 placeholder={ this.state.placeholder }
               />
+
+              <button className="SearchButton">
+                { "SEARCH" }
+              </button>
       
 
             </div>
           </div>
 
           <div className="results-div">
-        
+            <div className="Results">
+             Results
+            
+            </div>
+            <div className="There-are-zero-matches-Use-the-form-to-search-for">
+              { "There are zero matches."} 
+              { " Use the form to search for People of Movies"}
+            </div>
           </div>
         </div>
        
