@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Link } from "react-router-dom";
 import './Main.scss'
 
 class Main extends Component {
@@ -17,8 +17,6 @@ class Main extends Component {
 
   async fetchData (searchInput, type) {
     if (this.state.input.length > 0) {
-      
-
       try {
         const getData = await fetch(`https://swapi.co/api/${type}/?search=${searchInput}`)
         const result = await getData.json()
@@ -26,8 +24,6 @@ class Main extends Component {
           result: result.results,
           loaded: true
         })
-        console.log(result)
-        return result
       } catch (error) {
         console.log(error)
       }
@@ -81,7 +77,7 @@ class Main extends Component {
                 placeholder={ placeholder }
               />
 
-              <button className="SearchButton"
+              <button className="SearchButton" //FIX need to add hover state
                 style={
                   input.length > 0 ?
                     { cursor: "pointer", background: "#0ab463"} :
@@ -116,7 +112,13 @@ class Main extends Component {
                         : item.title
                       }
                       <button className="detail-button">
-                      DETAILS
+                        <Link to={
+                          searchType === "people" ?
+                            `/${searchType}/${item.name}` :
+                            `/${searchType}/${item.title}`
+                        }>
+                      SEE DETAILS
+                        </Link>
                       </button>
                     </li>
                   )

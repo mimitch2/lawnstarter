@@ -20,6 +20,10 @@ $button-color: #0ab463;
 
 
 .Main {
+  a {
+    color: #ffffff;
+    text-decoration: none;
+  }
   input:focus,
   select:focus,
   textarea:focus,
@@ -45,8 +49,6 @@ $button-color: #0ab463;
       .search-content-wrapper {
         margin-left: 30px;
         .What-are-you-searching-for {
-          width: 205px;
-          height: 18px;
           margin-top: 30px;
           font-family: Montserrat;
           font-size: 14px;
@@ -129,7 +131,6 @@ $button-color: #0ab463;
       // display: flex;
       // justify-content: center;
       .Results {
-        width: 522px;
         height: 32px;
         margin-left: 30px;
         padding-top: 30px;
@@ -145,6 +146,7 @@ $button-color: #0ab463;
       }
       .results-list {
         list-style: none;
+        margin-top: 0;
         .result-item {
           display: flex;
           justify-content: space-between;
