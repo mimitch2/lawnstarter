@@ -1,10 +1,17 @@
 .Details {
+  button:focus {
+    outline: none;
+  }
+  a {
+    color: #0094ff;
+    text-decoration: none;
+  }
   display: flex;
   justify-content: center;
   .details-card {
+    height: 417px;
     margin-top: 80px;
     width: 804px;
-    height: 537px;
     border-radius: 4px;
     box-shadow: 0 1px 2px 0 rgba(132, 132, 132, 0.75);
     border: solid 1px #dadada;
@@ -42,12 +49,13 @@
         margin-bottom: 5px;
       }
       .details-wrapper {
-        height: 325px;
+        // height: 325px;
         .details-list {
+          height: 101px;
           list-style: none;
           padding: 0;
-          // height: 325px;
           .details-list-item {
+            padding: 0;
             width: 220px;
             margin-left: 0px;
             font-family: Montserrat;
@@ -63,7 +71,7 @@
         }
         .opening-crawl-text {
           width: 220px;
-          // height: 325px;
+          height: 325px;
           font-family: Montserrat;
           font-size: 14px;
           font-weight: normal;
@@ -74,9 +82,25 @@
           color: #000000;
         }
       }
+       
+      .details-loading {
+        text-align: left;
+        // height: 325px;
+        font-family: Montserrat;
+        font-size: 14px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #c4c4c4;
+       
+      }
+      .loading-text {
+        // margin-top: 50%;
+      }
       .back-to-search-button {
         margin-top: 30px;
-        // transform: translateY(100px);
         font-family: Montserrat;
         font-size: 14px;
         font-weight: bold;
@@ -96,12 +120,11 @@
         }
         button:focus {
           outline: none;
-      }
-    
+        }
+
       }
     }
     .details-card-right {
-
       width: 322px;
       margin-left: 100px;
       margin-right: 30px;
@@ -117,7 +140,6 @@
       letter-spacing: normal;
       color: #ffffff;
       .details-right {
- 
         margin-top: 70px;
         width: 322px;
         height: 20px;
@@ -134,6 +156,7 @@
         margin-bottom: 5px;
       }
       .right-list-container {
+        margin-top: 16px;
         width: 322px;
         font-family: Montserrat;
         font-size: 14px;
@@ -143,9 +166,25 @@
         line-height: normal;
         letter-spacing: normal;
         color: #0094ff;
+       
+        .details-loading {
+          text-align: left;
+          // height: 325px;
+          font-family: Montserrat;
+          font-size: 14px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #c4c4c4;
+         
+        }
+        .loading-text {
+          // margin-top: 50%;
+        }
       }
-     
-      }
+    }
   }
 
 }

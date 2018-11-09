@@ -8,7 +8,7 @@ class Details extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      result: null,
+      result: [],
       loaded: false,
       details: [],
       detailsLoaded: false
@@ -20,7 +20,7 @@ class Details extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
+    if (prevProps.match.params.type !== this.props.match.params.type) {
       this.setState({
         details: [],
         detailsLoaded: false
@@ -37,9 +37,9 @@ class Details extends Component {
         const getData = await fetch(array[i])
         const result = await getData.json()
         type === "films" ? 
-          tempArr = [...tempArr, result.name] :
+          tempArr = [...tempArr, result.name] 
+          :
           tempArr = [...tempArr, result.title]
-        console.log(result)
       } catch (error) {
         console.log(error)
       }
@@ -54,7 +54,6 @@ class Details extends Component {
 
   async fetchData () {
     const { type, id } = this.props.match.params
-    // console.log(id, type)
     try {
       const getData = await fetch(`https://swapi.co/api/${type}/?search=${id}`)
       const result = await getData.json()
@@ -77,7 +76,13 @@ class Details extends Component {
     const { loaded, result, details, detailsLoaded } = this.state
     return (
       <div className="Details">
-        <div className="details-card">
+        <div className="details-card"
+          style={
+            type !== "people" ?
+              {height: "537px"} :
+              null
+          }
+        >
           <div className="details-card-left">
             <p className="result-name">
               { id }
@@ -88,7 +93,13 @@ class Details extends Component {
                 "Opening Crawl"
               }
             </p>
-            <div className="details-wrapper">
+            <div className="details-wrapper"
+              style ={
+                type === "people" ?
+                  {height: "101px"} :
+                  {height: "325px"}
+              }
+            >
               { type === "people" && loaded &&
             <ul className="details-list">
               <li className="details-list-item">
@@ -113,11 +124,21 @@ class Details extends Component {
               <div className="opening-crawl-text">
                 <p>{ result[0].opening_crawl } </p>
               </div>
+            || !loaded &&
+            <div className="details-loading">
+              <p className="loading-text">Loading...</p> 
+            </div>
               }
             </div>
-            <button className="back-to-search-button">
+            <button className="back-to-search-button"
+              style={
+                type === "people" ?
+                  {marginTop: "142px"} :
+                  {marginTop: "30px"}
+              }
+            >
               <Link to="/">
-                     BACK TO SEARCH
+                BACK TO SEARCH
               </Link>
             </button>
           </div>
@@ -132,12 +153,17 @@ class Details extends Component {
               { detailsLoaded &&
                 details.map((detail, i) => {
                   return (
-                    <Link to={`/${type === "people" ? "films" : "people"}/${detail}`} key={detail}>
+                    <Link 
+                      to={`/${type === "people" ? "films" : "people"}/${detail}`} key={detail}
+                    >
                       {detail}{i == details.length - 1 ? "" : ", "}
                     </Link>
                   )
                 })
-                || <div className="details-loading">Loading...</div>
+                ||
+                 <div className="details-loading">
+                   <p className="loading-text">Loading...</p> 
+                 </div>
               }
             </div>
           </div>

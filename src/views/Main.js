@@ -11,18 +11,22 @@ class Main extends Component {
       searchType: 'people',
       placeholder: "e.g. Chewbacca, Yoda, Boba Fett",
       result: null,
+      searching: false
 
     }
   }
 
   async fetchData (searchInput, type) {
+    
     if (this.state.input.length > 0) {
+      this.setState({searching: true})
       try {
         const getData = await fetch(`https://swapi.co/api/${type}/?search=${searchInput}`)
         const result = await getData.json()
         this.setState({
           result: result.results,
-          loaded: true
+          loaded: true,
+          searching: false
         })
       } catch (error) {
         console.log(error)
@@ -38,14 +42,12 @@ class Main extends Component {
 
   handleInput = (e) => {
     this.setState({input: e.target.value})
-    // this.state.input.length === 0 ? this.setState({loaded: false}) : null
-    console.log(this.state.input)
   }
 
 
 
   render() {
-    const { input, searchType, placeholder, loaded, result} = this.state
+    const { input, searchType, placeholder, loaded, result, searching } = this.state
     return (
       <div className="Main">
         <div className="content-wrapper">
@@ -54,11 +56,11 @@ class Main extends Component {
               <p className="What-are-you-searching-for">
                 What are you searching for?
               </p>
+
               <form className="radio-group">
                 <input type="radio"
                   name="type"
                   className="Ellipse"
-                  // value={ true }
                   defaultChecked
                   onClick={ () => this.handleRadio("people") }
                 />
@@ -70,9 +72,9 @@ class Main extends Component {
                 />
                 <label htmlFor="Movies" className="Movies">Movies</label>
               </form>
+
               <input className="search-input"
-                type="search" 
-                value={ input } 
+                type="text" 
                 onChange={ this.handleInput }         
                 placeholder={ placeholder }
               />
@@ -85,12 +87,7 @@ class Main extends Component {
                 }
                 onClick= { () => this.fetchData(input, searchType)}
               >
-              SEARCH
-                {/* { 
-                  input.length === 0 ?
-                    "SEARCH" :
-                    "SEARCHING..."
-                } */}
+                { !searching ? "SEARCH" : "SEARCHING..."}
               </button>
       
 
@@ -100,9 +97,8 @@ class Main extends Component {
           <div className="results-div">
             <div className="Results">
              Results
-            
             </div>
-            {/* <div className="There-are-zero-matches-Use-the-form-to-search-for"> */}
+
             { loaded && result.length > 0 &&
               <ul className="results-list">
                 {result.map(item => {
@@ -125,11 +121,21 @@ class Main extends Component {
                 })}
               </ul>
               || 
-              <div className="There-are-zero-matches-Use-the-form-to-search-for">
-              FEEDBACK
+              <div className="resutls-feedback-container">
+                {!searching && 
+              
+              <div className="resutls-feedback-message">
+                <p>There are no matches.</p>
+                <p>Use the form to search for People or Movies.</p>
+              </div>
+
+              || <div className="resutls-feedback-message">
+                <p>Searching...</p>
+              </div>
+              
+                }
               </div>
             }
-            {/* </div> */}
           </div>
         </div>
        
