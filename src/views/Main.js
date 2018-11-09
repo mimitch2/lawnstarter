@@ -7,10 +7,30 @@ class Main extends Component {
     super(props)
     this.state = {
       input: '',
-      feedback: false,
+      loaded: false,
       searchType: 'people',
-      placeholder: "e.g. Chewbacca, Yoda, Boba Fett"
+      placeholder: "e.g. Chewbacca, Yoda, Boba Fett",
+      result: null,
 
+    }
+  }
+
+  async fetchData (searchInput, type) {
+    if (this.state.input.length > 0) {
+      
+
+      try {
+        const getData = await fetch(`https://swapi.co/api/${type}/?search=${searchInput}`)
+        const result = await getData.json()
+        this.setState({
+          result: result.results,
+          loaded: true
+        })
+        console.log(result)
+        return result
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -22,11 +42,14 @@ class Main extends Component {
 
   handleInput = (e) => {
     this.setState({input: e.target.value})
+    // this.state.input.length === 0 ? this.setState({loaded: false}) : null
     console.log(this.state.input)
   }
 
+
+
   render() {
-    console.log(this.props)
+    const { input, searchType, placeholder, loaded, result} = this.state
     return (
       <div className="Main">
         <div className="content-wrapper">
@@ -39,7 +62,7 @@ class Main extends Component {
                 <input type="radio"
                   name="type"
                   className="Ellipse"
-                  value={ true }
+                  // value={ true }
                   defaultChecked
                   onClick={ () => this.handleRadio("people") }
                 />
@@ -47,20 +70,31 @@ class Main extends Component {
                 <input type="radio"
                   name="type"
                   className="Ellipse"
-                  // value={ this.state.searchType }
                   onClick={ () => this.handleRadio("films") } 
                 />
                 <label htmlFor="Movies" className="Movies">Movies</label>
               </form>
               <input className="search-input"
                 type="search" 
-                value={ this.state.input } 
+                value={ input } 
                 onChange={ this.handleInput }         
-                placeholder={ this.state.placeholder }
+                placeholder={ placeholder }
               />
 
-              <button className="SearchButton">
-                { "SEARCH" }
+              <button className="SearchButton"
+                style={
+                  input.length > 0 ?
+                    { cursor: "pointer", background: "#0ab463"} :
+                    null
+                }
+                onClick= { () => this.fetchData(input, searchType)}
+              >
+              SEARCH
+                {/* { 
+                  input.length === 0 ?
+                    "SEARCH" :
+                    "SEARCHING..."
+                } */}
               </button>
       
 
@@ -72,10 +106,28 @@ class Main extends Component {
              Results
             
             </div>
-            <div className="There-are-zero-matches-Use-the-form-to-search-for">
-              { "There are zero matches."} 
-              { " Use the form to search for People of Movies"}
-            </div>
+            {/* <div className="There-are-zero-matches-Use-the-form-to-search-for"> */}
+            { loaded && result.length > 0 &&
+              <ul className="results-list">
+                {result.map(item => {
+                  return (
+                    <li className="result-item" key={item.created}>
+                      { searchType === "people" ? item.name
+                        : item.title
+                      }
+                      <button className="detail-button">
+                      DETAILS
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+              || 
+              <div className="There-are-zero-matches-Use-the-form-to-search-for">
+              FEEDBACK
+              </div>
+            }
+            {/* </div> */}
           </div>
         </div>
        

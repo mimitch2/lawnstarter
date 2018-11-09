@@ -8,9 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      input: '',
-      searchType: 'people',
-      feedback: false
+   
     }
   }
 
@@ -18,28 +16,12 @@ class App extends Component {
     // this.fetchData()
   }
 
-
-  async fetchData (searchInput) {
-    try {
-      const getData = await fetch(`https://swapi.co/api/${this.state.searchType}/?search=${searchInput}`)
-      const result = await getData.json()
-    
-      console.log(result)
-      return result
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  
-
   render() {
     return (
       <Router>
         <div className="App">
           <Switch {...this.props}>
-            {/* <Route exact path="/" component={Main} /> */}
-            <Route exact path="/"  render={(props) => <Main {...props} search={ this.fetchData } />} />
-
+            <Route exact path="/"  render={(props) => <Main {...props} />} />
           </Switch>
         </div>
       </Router>

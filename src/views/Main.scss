@@ -20,9 +20,15 @@ $button-color: #0ab463;
 
 
 .Main {
-  height: 100vh;
-  // display: flex;
-  // justify-content: center;
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+      outline: none;
+  }
+  // height: 100vh;
+  display: flex;
+  justify-content: center;
   margin-top: 80px;
   .content-wrapper {
     width: 100vw;
@@ -114,10 +120,12 @@ $button-color: #0ab463;
   }
 
     .results-div {
+     
       @include card-style;
       width: 582px;
       height: 582px;
       margin-left: 30px;
+      overflow-Y: scroll;
       // display: flex;
       // justify-content: center;
       .Results {
@@ -134,6 +142,44 @@ $button-color: #0ab463;
         letter-spacing: normal;
         color: #000000;
         border-bottom: 1px solid  #c4c4c4;
+      }
+      .results-list {
+        list-style: none;
+        .result-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 54px;
+          width: 522px;
+          margin-left: -10px;
+          border-bottom: 1px solid #c4c4c4;
+          font-family: Montserrat;
+          font-size: 16px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #000000;
+          .detail-button {
+            width: 134px;
+            height: 34px;
+            border-radius: 17px;
+            background-color: #0ab463;
+            font-family: Montserrat;
+            font-size: 14px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: #ffffff;
+            &:hover {
+              background: #089954;
+              cursor: pointer;
+            }
+          }
+        }
       }
       .There-are-zero-matches-Use-the-form-to-search-for {
         margin-left: 129px;
