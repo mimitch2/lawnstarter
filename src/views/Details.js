@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import './Details.scss'
 
-
-
 class Details extends Component {
   constructor(props) {
     super(props)
@@ -14,6 +12,8 @@ class Details extends Component {
       detailsLoaded: false,
     }
   }
+
+  mounted = true
 
   componentDidMount = () => {
     this.fetchData()
@@ -27,6 +27,14 @@ class Details extends Component {
       })
       this.fetchData()
     }
+
+    if (this.props.match.path === "/") {
+      this.mounted = false;
+    }
+  }
+
+  componentWillUnmount = () => {
+    
   }
 
   async getDetails (array) {
