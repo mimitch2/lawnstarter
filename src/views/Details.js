@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import './Details.scss'
+import { fetchData } from "../actions";
 
 class Details extends Component {
   constructor(props) {
@@ -79,7 +81,8 @@ class Details extends Component {
   render() {
     const { id, type } = this.props.match.params
     const { loaded, result, details, detailsLoaded } = this.state
-    console.log(result)
+
+    console.log(this.props)
     return (
       <div className="Details" ref="detailsRef">
         <div className="details-card"
@@ -183,4 +186,22 @@ class Details extends Component {
   }
 }
 
-export default Details;
+function mapStateToProps(state) {
+  return {
+    filmOrChar: state.filmOrChar,
+    filmOrCharLoaded: state.filmOrCharLoaded,
+    details: state.details,
+    detailsLoaded: state.detailsLoaded
+  };
+}
+  
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchData: (type, id) => {
+      const action = fetchData(type, id);
+      dispatch(action);
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Details);
