@@ -13,8 +13,6 @@ class Details extends Component {
     }
   }
 
-  mounted = true
-
   componentDidMount = () => {
     this.fetchData()
   }
