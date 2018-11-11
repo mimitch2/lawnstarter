@@ -10,21 +10,22 @@ class Main extends Component {
       loaded: false,
       searchType: 'people',
       placeholder: "e.g. Chewbacca, Yoda, Boba Fett",
-      result: null,
+      result: [],
       searching: false
-
     }
   }
 
   async fetchData (searchInput, type) {
-    
     if (this.state.input.length > 0) {
-      this.setState({searching: true})
+      this.setState({
+        searching: true,
+        result: []
+      })
       try {
         const getData = await fetch(`https://swapi.co/api/${type}/?search=${searchInput}`)
         const result = await getData.json()
         this.setState({
-          result: result.results,
+          result: [...result.results],
           loaded: true,
           searching: false
         })
@@ -37,14 +38,14 @@ class Main extends Component {
   handleRadio = ( type ) => {
     this.setState({searchType: type})
     type === "people" ? this.setState({placeholder: "e.g. Chewbacca, Yoda, Boba Fett"})
-      : this.setState({placeholder: "e.g. A New Hope, Phantom Menace"})
+      : this.setState({
+        placeholder: "e.g. A New Hope, Phantom Menace"
+      })
   }
 
   handleInput = (e) => {
     this.setState({input: e.target.value})
   }
-
-
 
   render() {
     const { input, searchType, placeholder, loaded, result, searching } = this.state
@@ -64,33 +65,38 @@ class Main extends Component {
                   defaultChecked
                   onClick={ () => this.handleRadio("people") }
                 />
-                <label htmlFor="People" className="People">People</label>
+                <label htmlFor="People" className="People">
+                 People
+                </label>
                 <input type="radio"
                   name="type"
                   className="Ellipse"
                   onClick={ () => this.handleRadio("films") } 
                 />
-                <label htmlFor="Movies" className="Movies">Movies</label>
+                <label htmlFor="Movies" className="Movies">
+                  Movies
+                </label>
               </form>
 
               <input className="search-input"
                 type="text" 
                 onChange={ this.handleInput }         
                 placeholder={ placeholder }
+                onKeyDown={ () => event.key === "Enter" ? 
+                  this.fetchData(this.state.input, this.state.searchType) : null } 
               />
-
-              <button className="SearchButton" //FIX need to add hover state
+              <button className="SearchButton"
+                onClick= { () => this.fetchData(input, searchType) }
                 style={
-                  input.length > 0 ?
-                    { cursor: "pointer", background: "#0ab463"} :
+                  input.length > 0 
+                    ?
+                    { cursor: "pointer", background: "#0ab463" } 
+                    :
                     null
                 }
-                onClick= { () => this.fetchData(input, searchType)}
               >
-                { !searching ? "SEARCH" : "SEARCHING..."}
+                { !searching ? "SEARCH" : "SEARCHING..." }
               </button>
-      
-
             </div>
           </div>
 
@@ -98,22 +104,23 @@ class Main extends Component {
             <div className="Results">
              Results
             </div>
-
             { loaded && result.length > 0 &&
               <ul className="results-list">
                 {result.map(item => {
                   return (
                     <li className="result-item" key={item.created}>
-                      { searchType === "people" ? item.name
+                      { searchType === "people"
+                        ? item.name
                         : item.title
                       }
                       <button className="detail-button">
-                        <Link to={
-                          searchType === "people" ?
-                            `/${searchType}/${item.name}` :
-                            `/${searchType}/${item.title}`
-                        }>
-                      SEE DETAILS
+                        <Link 
+                          to={
+                            searchType === "people" ?
+                              `/${searchType}/${item.name}` :
+                              `/${searchType}/${item.title}`}
+                        >
+                          SEE DETAILS
                         </Link>
                       </button>
                     </li>
@@ -122,24 +129,20 @@ class Main extends Component {
               </ul>
               || 
               <div className="resutls-feedback-container">
-                {!searching && 
-              
+                { !searching && 
               <div className="resutls-feedback-message">
                 <p>There are no matches.</p>
                 <p>Use the form to search for People or Movies.</p>
               </div>
-
-              || <div className="resutls-feedback-message">
+              ||
+              <div className="resutls-feedback-message">
                 <p>Searching...</p>
               </div>
-              
                 }
               </div>
             }
           </div>
         </div>
-       
-
       </div>
     )
   }

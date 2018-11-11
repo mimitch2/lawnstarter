@@ -9,9 +9,9 @@
   display: flex;
   justify-content: center;
   .details-card {
-    height: 417px;
     margin-top: 80px;
     width: 804px;
+    height: 417px;
     border-radius: 4px;
     box-shadow: 0 1px 2px 0 rgba(132, 132, 132, 0.75);
     border: solid 1px #dadada;
@@ -24,24 +24,15 @@
       .result-name {
         margin-top: 30px;
         height: 22px;
-        font-family: Montserrat;
         font-size: 18px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
         color: #000000;
       }
       .details-title {
         width: 322px;
         height: 20px;
-        font-family: Montserrat;
         font-size: 16px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
         letter-spacing: normal;
         color: #000000;
         border-bottom: 1px solid #c4c4c4;
@@ -49,7 +40,6 @@
         margin-bottom: 5px;
       }
       .details-wrapper {
-        // height: 325px;
         .details-list {
           height: 101px;
           list-style: none;
@@ -58,56 +48,31 @@
             padding: 0;
             width: 220px;
             margin-left: 0px;
-            font-family: Montserrat;
             font-size: 14px;
             font-weight: normal;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
             color: #000000;
-          }
-        
+          } 
         }
         .opening-crawl-text {
-          width: 220px;
-          height: 325px;
-          font-family: Montserrat;
+          overflow-y: auto;
+          white-space: pre-line;
+          width: 258px;
+          height: 360px;
           font-size: 14px;
           font-weight: normal;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
           color: #000000;
         }
       }
-       
       .details-loading {
         text-align: left;
-        // height: 325px;
-        font-family: Montserrat;
         font-size: 14px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
         color: #c4c4c4;
-       
-      }
-      .loading-text {
-        // margin-top: 50%;
       }
       .back-to-search-button {
-        margin-top: 30px;
-        font-family: Montserrat;
+        margin-top: 50px;
         font-size: 14px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
         color: #ffffff;
         width: 187px;
         height: 34px;
@@ -121,7 +86,6 @@
         button:focus {
           outline: none;
         }
-
       }
     }
     .details-card-right {
@@ -131,25 +95,15 @@
       height: 417px;
       width: 132px;
       height: 18px;
-      font-family: Montserrat;
       font-size: 14px;
       font-weight: bold;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
       color: #ffffff;
       .details-right {
         margin-top: 70px;
         width: 322px;
         height: 20px;
-        font-family: Montserrat;
         font-size: 16px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
         color: #000000;
         border-bottom: 1px solid #c4c4c4;
         padding-bottom: 10px;
@@ -158,33 +112,18 @@
       .right-list-container {
         margin-top: 16px;
         width: 322px;
-        font-family: Montserrat;
         font-size: 14px;
         font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
         color: #0094ff;
        
         .details-loading {
           text-align: left;
-          // height: 325px;
-          font-family: Montserrat;
           font-size: 14px;
           font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
           color: #c4c4c4;
          
-        }
-        .loading-text {
-          // margin-top: 50%;
         }
       }
     }
   }
-
 }

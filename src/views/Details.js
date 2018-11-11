@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
-
 import './Details.scss'
 
 
@@ -11,7 +10,8 @@ class Details extends Component {
       result: [],
       loaded: false,
       details: [],
-      detailsLoaded: false
+      detailsLoaded: false,
+      fetchActive: false
     }
   }
 
@@ -19,7 +19,7 @@ class Details extends Component {
     this.fetchData()
   }
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = (prevProps) => { 
     if (prevProps.match.params.type !== this.props.match.params.type) {
       this.setState({
         details: [],
@@ -29,6 +29,10 @@ class Details extends Component {
     }
   }
 
+  componentWillUnmount = () => {
+    
+  }
+  
   async getDetails (array) {
     const { type } = this.props.match.params
     let tempArr = []
@@ -36,26 +40,27 @@ class Details extends Component {
       try {
         const getData = await fetch(array[i])
         const result = await getData.json()
-        type === "films" ? 
+        type === "films" 
+          ? 
           tempArr = [...tempArr, result.name] 
           :
           tempArr = [...tempArr, result.title]
       } catch (error) {
         console.log(error)
       }
-      
     }
     this.setState({
       details: tempArr,
       detailsLoaded: true
     })
-   
   }
 
   async fetchData () {
+    this.setState({fetchActive: true})
     const { type, id } = this.props.match.params
     try {
       const getData = await fetch(`https://swapi.co/api/${type}/?search=${id}`)
+   
       const result = await getData.json()
       this.setState({
         result: result.results,
@@ -66,6 +71,7 @@ class Details extends Component {
       } else {
         this.getDetails(result.results[0].characters)
       }
+
     } catch (error) {
       console.log(error)
     }
@@ -74,13 +80,14 @@ class Details extends Component {
   render() {
     const { id, type } = this.props.match.params
     const { loaded, result, details, detailsLoaded } = this.state
+    console.log(id, type)
     return (
-      <div className="Details">
+      <div className="Details" ref="detailsRef">
         <div className="details-card"
           style={
-            type !== "people" ?
-              {height: "537px"} :
-              null
+            type !== "people" 
+              ? {height: "537px"} 
+              : null
           }
         >
           <div className="details-card-left">
@@ -120,28 +127,32 @@ class Details extends Component {
                 Mass: {result[0].mass}
               </li>
             </ul>
-            || loaded &&
+
+              || loaded &&
               <div className="opening-crawl-text">
                 <p>{ result[0].opening_crawl } </p>
               </div>
-            || !loaded &&
-            <div className="details-loading">
-              <p className="loading-text">Loading...</p> 
-            </div>
+              || !loaded &&
+              <div className="details-loading">
+                <p className="loading-text">Loading...</p> 
+              </div>
               }
             </div>
+
             <button className="back-to-search-button"
               style={
                 type === "people" ?
                   {marginTop: "142px"} :
-                  {marginTop: "30px"}
+                  null
               }
             >
               <Link to="/">
                 BACK TO SEARCH
               </Link>
             </button>
+
           </div>
+
           <div className="details-card-right">
             <p className="details-right">
               { type === "people" ?
