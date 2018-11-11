@@ -8,10 +8,11 @@
   }
   display: flex;
   justify-content: center;
+  overflow-y: hidden;
   .details-card {
+    box-sizing: content-box;
     margin-top: 80px;
     width: 804px;
-    height: 417px;
     border-radius: 4px;
     box-shadow: 0 1px 2px 0 rgba(132, 132, 132, 0.75);
     border: solid 1px #dadada;
@@ -20,7 +21,6 @@
     .details-card-left {
       width: 322px;
       margin-left: 30px;
-      height: 417px;
       .result-name {
         margin-top: 30px;
         height: 22px;
@@ -40,6 +40,7 @@
         margin-bottom: 5px;
       }
       .details-wrapper {
+        margin-top: 16px;
         .details-list {
           height: 101px;
           list-style: none;
@@ -54,23 +55,24 @@
           } 
         }
         .opening-crawl-text {
-          overflow-y: auto;
           white-space: pre-line;
-          width: 258px;
-          height: 360px;
+          width: 220px;
+          
           font-size: 14px;
           font-weight: normal;
           color: #000000;
         }
       }
       .details-loading {
+        min-height: 328px;
         text-align: left;
         font-size: 14px;
         font-weight: bold;
         color: #c4c4c4;
       }
       .back-to-search-button {
-        margin-top: 50px;
+        margin-top: 30px;
+        // margin-bottom: 30px;
         font-size: 14px;
         font-weight: bold;
         color: #ffffff;
@@ -92,9 +94,8 @@
       width: 322px;
       margin-left: 100px;
       margin-right: 30px;
-      height: 417px;
       width: 132px;
-      height: 18px;
+      // height: 18px;
       font-size: 14px;
       font-weight: bold;
       color: #ffffff;
@@ -115,13 +116,11 @@
         font-size: 14px;
         font-weight: normal;
         color: #0094ff;
-       
         .details-loading {
           text-align: left;
           font-size: 14px;
           font-weight: bold;
-          color: #c4c4c4;
-         
+          color: #c4c4c4; 
         }
       }
     }

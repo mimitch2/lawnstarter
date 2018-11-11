@@ -12,8 +12,12 @@ class App extends Component {
         <div className="App">
           <Header />
           <Switch {...this.props}>
-            <Route exact path="/"  render={(props) => <Main {...props} />} />
-            <Route exact path="/:type/:id"  render={(props) => <Details {...props} />} />
+            <Route exact path="/" 
+              render={(props) => <Main {...props} />} 
+            />
+            <Route exact path="/:type/:id"  
+              render={(props) => <Details {...props} />} 
+            />
           </Switch>
         </div>
       </Router>

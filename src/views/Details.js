@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import './Details.scss'
 
 
+
 class Details extends Component {
   constructor(props) {
     super(props)
@@ -11,7 +12,6 @@ class Details extends Component {
       loaded: false,
       details: [],
       detailsLoaded: false,
-      fetchActive: false
     }
   }
 
@@ -29,10 +29,6 @@ class Details extends Component {
     }
   }
 
-  componentWillUnmount = () => {
-    
-  }
-  
   async getDetails (array) {
     const { type } = this.props.match.params
     let tempArr = []
@@ -56,11 +52,9 @@ class Details extends Component {
   }
 
   async fetchData () {
-    this.setState({fetchActive: true})
     const { type, id } = this.props.match.params
     try {
       const getData = await fetch(`https://swapi.co/api/${type}/?search=${id}`)
-   
       const result = await getData.json()
       this.setState({
         result: result.results,
@@ -71,7 +65,6 @@ class Details extends Component {
       } else {
         this.getDetails(result.results[0].characters)
       }
-
     } catch (error) {
       console.log(error)
     }
@@ -80,13 +73,13 @@ class Details extends Component {
   render() {
     const { id, type } = this.props.match.params
     const { loaded, result, details, detailsLoaded } = this.state
-    console.log(id, type)
+    console.log(result)
     return (
       <div className="Details" ref="detailsRef">
         <div className="details-card"
           style={
-            type !== "people" 
-              ? {height: "537px"} 
+            type === "people" 
+              ? {height: "417px"} 
               : null
           }
         >
@@ -104,7 +97,7 @@ class Details extends Component {
               style ={
                 type === "people" ?
                   {height: "101px"} :
-                  {height: "325px"}
+                  {minHeight: "325px"}
               }
             >
               { type === "people" && loaded &&
@@ -130,7 +123,7 @@ class Details extends Component {
 
               || loaded &&
               <div className="opening-crawl-text">
-                <p>{ result[0].opening_crawl } </p>
+                <div>{ result[0].opening_crawl } </div>
               </div>
               || !loaded &&
               <div className="details-loading">
@@ -142,8 +135,8 @@ class Details extends Component {
             <button className="back-to-search-button"
               style={
                 type === "people" ?
-                  {marginTop: "142px"} :
-                  null
+                  {marginTop: "136px"} :
+                  {marginBottom: "30px"}
               }
             >
               <Link to="/">

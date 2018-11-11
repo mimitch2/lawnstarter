@@ -101,7 +101,7 @@ class Main extends Component {
           </div>
 
           <div className="results-div">
-            <div className="Results">
+            <div className="results">
              Results
             </div>
             { loaded && result.length > 0 &&
@@ -131,8 +131,8 @@ class Main extends Component {
               <div className="resutls-feedback-container">
                 { !searching && 
               <div className="resutls-feedback-message">
-                <p>There are no matches.</p>
-                <p>Use the form to search for People or Movies.</p>
+                <p className="results-feedback-text">There are no matches.</p>
+                <p className="results-feedback-text">Use the form to search for People or Movies.</p>
               </div>
               ||
               <div className="resutls-feedback-message">
