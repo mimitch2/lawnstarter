@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import { CSSTransition } from 'react-transition-group';
 import './Main.scss'
 
 class Main extends Component {
@@ -11,8 +12,13 @@ class Main extends Component {
       searchType: 'people',
       placeholder: "e.g. Chewbacca, Yoda, Boba Fett",
       result: [],
-      searching: false
+      searching: false,
+      show: false
     }
+  }
+
+  componentDidMount = () => {
+    this.setState({show: true})
   }
 
   async fetchData (searchInput, type) {
@@ -59,64 +65,70 @@ class Main extends Component {
   }
 
   render() {
-    const { input, searchType, placeholder, loaded, result, searching } = this.state
+    const { input, searchType, placeholder, loaded, result, searching, show } = this.state
     return (
       <div className="Main">
-        <div className="content-wrapper">
-          <div className="search-div">
-            <div className="search-content-wrapper">
-              <p className="What-are-you-searching-for">
+        <CSSTransition
+          in={show}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
+        >
+          <div className="content-wrapper">
+            <div className="search-div">
+              <div className="search-content-wrapper">
+                <p className="What-are-you-searching-for">
                 What are you searching for?
-              </p>
+                </p>
 
-              <form className="radio-group">
-                <input type="radio"
-                  name="type"
-                  className="Ellipse"
-                  defaultChecked
-                  onClick={ () => this.handleRadio("people") }
-                />
-                <label htmlFor="People" className="People">
+                <form className="radio-group">
+                  <input type="radio"
+                    name="type"
+                    className="Ellipse"
+                    defaultChecked
+                    onClick={ () => this.handleRadio("people") }
+                  />
+                  <label htmlFor="People" className="People">
                  People
-                </label>
-                <input type="radio"
-                  name="type"
-                  className="Ellipse"
-                  onClick={ () => this.handleRadio("films") } 
-                />
-                <label htmlFor="Movies" className="Movies">
+                  </label>
+                  <input type="radio"
+                    name="type"
+                    className="Ellipse"
+                    onClick={ () => this.handleRadio("films") } 
+                  />
+                  <label htmlFor="Movies" className="Movies">
                   Movies
-                </label>
-              </form>
+                  </label>
+                </form>
 
-              <input className="search-input"
-                type="text" 
-                onChange={ this.handleInput }         
-                placeholder={ placeholder }
-                value= { input }
-                onKeyDown={ () => event.key === "Enter" ? 
-                  this.fetchData(this.state.input, this.state.searchType) : null } 
-              />
-              <button className="SearchButton"
-                onClick= { () => this.fetchData(input, searchType) }
-                style={
-                  input.length > 0 
-                    ?
-                    { cursor: "pointer", background: "#0ab463" } 
-                    :
-                    null
-                }
-              >
-                { !searching ? "SEARCH" : "SEARCHING..." }
-              </button>
+                <input className="search-input"
+                  type="text" 
+                  onChange={ this.handleInput }         
+                  placeholder={ placeholder }
+                  value= { input }
+                  onKeyDown={ () => event.key === "Enter" ? 
+                    this.fetchData(this.state.input, this.state.searchType) : null } 
+                />
+                <button className="SearchButton"
+                  onClick= { () => this.fetchData(input, searchType) }
+                  style={
+                    input.length > 0 
+                      ?
+                      { cursor: "pointer", background: "#0ab463" } 
+                      :
+                      null
+                  }
+                >
+                  { !searching ? "SEARCH" : "SEARCHING..." }
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="results-div">
-            <div className="results">
+            <div className="results-div">
+              <div className="results">
              Results
-            </div>
-            { loaded && result.length > 0 &&
+              </div>
+              { loaded && result.length > 0 &&
               <ul className="results-list">
                 {result.map(item => {
                   return (
@@ -152,9 +164,10 @@ class Main extends Component {
               </div>
                 }
               </div>
-            }
+              }
+            </div>
           </div>
-        </div>
+        </CSSTransition>
       </div>
     )
   }

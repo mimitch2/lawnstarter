@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { CSSTransition } from 'react-transition-group';
 import './Details.scss'
 import { fetchData, setDetailsLoaded, dataLoaded  } from "../actions";
 
 class Details extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      show: false
+    }
+  }
 
   componentDidMount = () => {
+    this.setState({show: true})
     this.reset()
     this.props.fetchData(this.props.match.params.type, this.props.match.params.id)
   }
@@ -28,25 +36,31 @@ class Details extends Component {
     const { filmOrCharLoaded, filmOrChar, details, detailsLoaded } = this.props
     return (
       <div className="Details">
-        <div className="details-card">
-          <div className="details-card-left">
-            <p className="result-name">
-              { id }
-            </p>
-            <p className="details-title">
-              { type === "people" ?
-                "Details" :
-                "Opening Crawl"
-              }
-            </p>
-            <div className="details-wrapper"
-              style ={
-                type === "people" ?
-                  {height: "101px"} :
-                  null
-              }
-            >
-              { type === "people" && filmOrCharLoaded &&
+        <CSSTransition
+          in={this.state.show}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
+        >
+          <div className="details-card">
+            <div className="details-card-left">
+              <p className="result-name">
+                { id }
+              </p>
+              <p className="details-title">
+                { type === "people" ?
+                  "Details" :
+                  "Opening Crawl"
+                }
+              </p>
+              <div className="details-wrapper"
+                style ={
+                  type === "people" ?
+                    {height: "101px"} :
+                    null
+                }
+              >
+                { type === "people" && filmOrCharLoaded &&
             <ul className="details-list">
               <li className="details-list-item">
                 Birth Year: {filmOrChar[0].birth_year}
@@ -75,26 +89,26 @@ class Details extends Component {
               <div className="details-loading">
                 <p className="loading-text">Loading...</p> 
               </div>
-              }
+                }
+              </div>
+
+              <button className="back-to-search-button">
+                <Link to="/">
+                BACK TO SEARCH
+                </Link>
+              </button>
+
             </div>
 
-            <button className="back-to-search-button">
-              <Link to="/">
-                BACK TO SEARCH
-              </Link>
-            </button>
-
-          </div>
-
-          <div className="details-card-right">
-            <p className="details-right">
-              { type === "people" ?
-                "Movies" :
-                "Characters"
-              }
-            </p>
-            <div className="right-list-container">
-              { detailsLoaded &&
+            <div className="details-card-right">
+              <p className="details-right">
+                { type === "people" ?
+                  "Movies" :
+                  "Characters"
+                }
+              </p>
+              <div className="right-list-container">
+                { detailsLoaded &&
                 details.map((detail, i) => {
                   return (
                     <Link 
@@ -108,10 +122,11 @@ class Details extends Component {
                  <div className="details-loading">
                    <p className="loading-text">Loading...</p> 
                  </div>
-              }
+                }
+              </div>
             </div>
           </div>
-        </div>
+        </CSSTransition>
       </div>
     )
   }
