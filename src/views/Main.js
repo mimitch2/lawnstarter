@@ -44,7 +44,13 @@ class Main extends Component {
   }
 
   handleInput = (e) => {
-    this.setState({input: e.target.value})
+    const input = e.target.value
+    this.setState({input: input})
+    if (input.length === 0) {
+      this.setState({
+        result: []
+      })
+    }
   }
 
   render() {
@@ -129,7 +135,7 @@ class Main extends Component {
               </ul>
               || 
               <div className="resutls-feedback-container">
-                { !searching && 
+                { !searching &&
               <div className="results-feedback-message">
                 <p className="results-feedback-text">There are no matches.</p>
                 <p className="results-feedback-text">Use the form to search for People or Movies.</p>
