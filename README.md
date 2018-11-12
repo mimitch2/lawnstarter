@@ -1,28 +1,15 @@
-This project was created with [Create React App](https://github.com/facebook/create-react-app) and then ejected.
+Mike Mitchell - Lawnstarter coding excersize
 
-## Available Scripts
+## Instructions
 
-In the project directory, you can run:
+run npm i once the repo is cloned
 
-### `yarn start`
+### Notes
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I submitted two branches, 'master' and 'add-redux'.  In the master branch, I used local state to manage the data, but ran into a console error (it did not affect the functionality) due to unresolved promises and setting state after the Detail component unmounted.  
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+This occured when you clicked either the "Back to search" button or the browser's back button if there was an unresolved fetch promise.  The promise would return after the component unmounted, and it attempted to then set state.  I remedied the issue with the "add-redux" branch so that the fetch actions and state were all in redux, thus avoiding the error.
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](#running-tests) for more information.
 
-### `yarn run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](#deployment) for more information.
