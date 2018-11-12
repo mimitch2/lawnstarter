@@ -27,7 +27,7 @@ class Details extends Component {
     const { id, type } = this.props.match.params
     const { filmOrCharLoaded, filmOrChar, details, detailsLoaded } = this.props
     return (
-      <div className="Details" ref="detailsRef">
+      <div className="Details">
         <div className="details-card">
           <div className="details-card-left">
             <p className="result-name">
