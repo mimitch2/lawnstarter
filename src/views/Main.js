@@ -130,7 +130,7 @@ class Main extends Component {
               || 
               <div className="resutls-feedback-container">
                 { !searching && 
-              <div className="resutls-feedback-message">
+              <div className="results-feedback-message">
                 <p className="results-feedback-text">There are no matches.</p>
                 <p className="results-feedback-text">Use the form to search for People or Movies.</p>
               </div>

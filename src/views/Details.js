@@ -79,16 +79,9 @@ class Details extends Component {
   render() {
     const { id, type } = this.props.match.params
     const { loaded, result, details, detailsLoaded } = this.state
-    console.log(result)
     return (
       <div className="Details" ref="detailsRef">
-        <div className="details-card"
-          style={
-            type === "people" 
-              ? {height: "417px"} 
-              : null
-          }
-        >
+        <div className="details-card">
           <div className="details-card-left">
             <p className="result-name">
               { id }
@@ -103,7 +96,7 @@ class Details extends Component {
               style ={
                 type === "people" ?
                   {height: "101px"} :
-                  {minHeight: "325px"}
+                  null
               }
             >
               { type === "people" && loaded &&
@@ -138,13 +131,7 @@ class Details extends Component {
               }
             </div>
 
-            <button className="back-to-search-button"
-              style={
-                type === "people" ?
-                  {marginTop: "136px"} :
-                  {marginBottom: "30px"}
-              }
-            >
+            <button className="back-to-search-button">
               <Link to="/">
                 BACK TO SEARCH
               </Link>
