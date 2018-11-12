@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import { CSSTransition } from 'react-transition-group';
 import './Details.scss'
 
 class Details extends Component {
@@ -10,10 +11,12 @@ class Details extends Component {
       loaded: false,
       details: [],
       detailsLoaded: false,
+      show: false
     }
   }
 
   componentDidMount = () => {
+    this.setState({show: true})
     this.fetchData()
   }
 
@@ -21,7 +24,7 @@ class Details extends Component {
     if (prevProps.match.params.type !== this.props.match.params.type) {
       this.setState({
         details: [],
-        detailsLoaded: false
+        detailsLoaded: false,
       })
       this.fetchData()
     }
@@ -29,10 +32,6 @@ class Details extends Component {
     if (this.props.match.path === "/") {
       this.mounted = false;
     }
-  }
-
-  componentWillUnmount = () => {
-    
   }
 
   async getDetails (array) {
@@ -78,28 +77,36 @@ class Details extends Component {
 
   render() {
     const { id, type } = this.props.match.params
-    const { loaded, result, details, detailsLoaded } = this.state
+    const { loaded, result, details, detailsLoaded, show } = this.state
     return (
-      <div className="Details" ref="detailsRef">
-        <div className="details-card">
-          <div className="details-card-left">
-            <p className="result-name">
-              { id }
-            </p>
-            <p className="details-title">
-              { type === "people" ?
-                "Details" :
-                "Opening Crawl"
-              }
-            </p>
-            <div className="details-wrapper"
-              style ={
-                type === "people" ?
-                  {height: "101px"} :
-                  {minHeight: "206px"}
-              }
-            >
-              { type === "people" && loaded &&
+
+
+      <div className="Details">
+        <CSSTransition
+          in={this.state.show}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
+        >
+          <div className="details-card">
+            <div className="details-card-left">
+              <p className="result-name">
+                { id }
+              </p>
+              <p className="details-title">
+                { type === "people" ?
+                  "Details" :
+                  "Opening Crawl"
+                }
+              </p>
+              <div className="details-wrapper"
+                style ={
+                  type === "people" ?
+                    {height: "101px"} :
+                    {minHeight: "206px"}
+                }
+              >
+                { type === "people" && loaded &&
             <ul className="details-list">
               <li className="details-list-item">
                 Birth Year: {result[0].birth_year}
@@ -128,26 +135,26 @@ class Details extends Component {
               <div className="details-loading">
                 <p className="loading-text">Loading...</p> 
               </div>
-              }
+                }
+              </div>
+
+              <button className="back-to-search-button">
+                <Link to="/">
+                BACK TO SEARCH
+                </Link>
+              </button>
+
             </div>
 
-            <button className="back-to-search-button">
-              <Link to="/">
-                BACK TO SEARCH
-              </Link>
-            </button>
-
-          </div>
-
-          <div className="details-card-right">
-            <p className="details-right">
-              { type === "people" ?
-                "Movies" :
-                "Characters"
-              }
-            </p>
-            <div className="right-list-container">
-              { detailsLoaded &&
+            <div className="details-card-right">
+              <p className="details-right">
+                { type === "people" ?
+                  "Movies" :
+                  "Characters"
+                }
+              </p>
+              <div className="right-list-container">
+                { detailsLoaded &&
                 details.map((detail, i) => {
                   return (
                     <Link 
@@ -161,11 +168,14 @@ class Details extends Component {
                  <div className="details-loading">
                    <p className="loading-text">Loading...</p> 
                  </div>
-              }
+                }
+              </div>
             </div>
           </div>
-        </div>
+        </CSSTransition>
       </div>
+   
+
     )
   }
 }
