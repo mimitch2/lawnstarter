@@ -37,10 +37,15 @@ class Main extends Component {
 
   handleRadio = ( type ) => {
     this.setState({searchType: type})
-    type === "people" ? this.setState({placeholder: "e.g. Chewbacca, Yoda, Boba Fett"})
-      : this.setState({
-        placeholder: "e.g. A New Hope, Phantom Menace"
-      })
+   
+    this.setState({
+      placeholder: type === "people" ? "e.g. Chewbacca, Yoda, Boba Fett" :
+        "e.g. A New Hope, Phantom Menace",
+      result: [],
+      input: ''
+    })
+
+          
   }
 
   handleInput = (e) => {
@@ -88,6 +93,7 @@ class Main extends Component {
                 type="text" 
                 onChange={ this.handleInput }         
                 placeholder={ placeholder }
+                value= { input }
                 onKeyDown={ () => event.key === "Enter" ? 
                   this.fetchData(this.state.input, this.state.searchType) : null } 
               />
