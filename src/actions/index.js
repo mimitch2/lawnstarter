@@ -1,16 +1,18 @@
-export async function fetchData(type, id) {
-  try {
-    const getData = await fetch(`https://swapi.co/api/${type}/?search=${id}`)
-    const result = await getData.json()
-    setData(result)
-    dataLoaded(true)
-    if (type === "people") {
-      getDetails(result.results[0].films)
-    } else {
-      getDetails(result.results[0].characters)
+export const fetchData = (type, id) => {
+  return async function(dispatch) {
+    try {
+      const getData = await fetch(`https://swapi.co/api/${type}/?search=${id}`)
+      const result = await getData.json()
+      dispatch(setData(result.results))
+      dispatch(dataLoaded(true))
+      if (type === "people") {
+        dispatch(getDetails(result.results[0].films, "films"))
+      } else {
+        dispatch(getDetails(result.results[0].characters, "people"))
+      }
+    } catch (error) {
+      console.log(error)
     }
-  } catch (error) {
-    console.log(error)
   }
 }
 
@@ -28,24 +30,26 @@ export const dataLoaded = (bool) => {
   };
 }
 
-export async function getDetails(array, type) {
-  let tempArr = []
-  for (let i = 0; i < array.length; i++) {
-    try {
-      const getData = await fetch(array[i])
-      const result = await getData.json()
-      type === "films" 
-        ? 
-        tempArr = [...tempArr, result.name] 
-        :
-        tempArr = [...tempArr, result.title]
-
-    } catch (error) {
-      console.log(error)
+export const getDetails = (array, type) => {
+  return async function(dispatch) {
+    dispatch(setDetailsLoaded(false))
+    let tempArr = []
+    for (let i = 0; i < array.length; i++) {
+      try {
+        const getData = await fetch(array[i])
+        const result = await getData.json()
+        if (type === "people") {
+          tempArr.push(result.name) 
+        } else {
+          tempArr.push(result.title)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
+    dispatch(setDetails(tempArr))
+    dispatch(setDetailsLoaded(true))
   }
-  setDetails(result)
-  detailsLoaded(true)
 }
 
 export const setDetails = (result) => {
@@ -55,7 +59,7 @@ export const setDetails = (result) => {
   };
 }
 
-export const detailsLoaded = (bool) => {
+export const setDetailsLoaded = (bool) => {
   return {
     type: "DETAILS_LOADED",
     value: bool

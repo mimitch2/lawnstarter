@@ -2,87 +2,30 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import './Details.scss'
-import { fetchData } from "../actions";
+import { fetchData, setDetailsLoaded, dataLoaded  } from "../actions";
 
 class Details extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      result: [],
-      loaded: false,
-      details: [],
-      detailsLoaded: false,
-    }
-  }
 
   componentDidMount = () => {
-    this.fetchData()
+    this.reset()
+    this.props.fetchData(this.props.match.params.type, this.props.match.params.id)
   }
 
   componentDidUpdate = (prevProps) => { 
     if (prevProps.match.params.type !== this.props.match.params.type) {
-      this.setState({
-        details: [],
-        detailsLoaded: false
-      })
-      this.fetchData()
-    }
-
-    if (this.props.match.path === "/") {
-      this.mounted = false;
+      this.reset()
+      this.props.fetchData(this.props.match.params.type, this.props.match.params.id)
     }
   }
 
-  componentWillUnmount = () => {
-    
-  }
-
-  async getDetails (array) {
-    const { type } = this.props.match.params
-    let tempArr = []
-    for (let i = 0; i < array.length; i++) {
-      try {
-        const getData = await fetch(array[i])
-        const result = await getData.json()
-        type === "films" 
-          ? 
-          tempArr = [...tempArr, result.name] 
-          :
-          tempArr = [...tempArr, result.title]
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    this.setState({
-      details: tempArr,
-      detailsLoaded: true
-    })
-  }
-
-  async fetchData () {
-    const { type, id } = this.props.match.params
-    try {
-      const getData = await fetch(`https://swapi.co/api/${type}/?search=${id}`)
-      const result = await getData.json()
-      this.setState({
-        result: result.results,
-        loaded: true
-      })
-      if (type === "people") {
-        this.getDetails(result.results[0].films)
-      } else {
-        this.getDetails(result.results[0].characters)
-      }
-    } catch (error) {
-      console.log(error)
-    }
+  reset = () => {
+    this.props.setDetailsLoaded(false)
+    this.props.dataLoaded(false)
   }
 
   render() {
     const { id, type } = this.props.match.params
-    const { loaded, result, details, detailsLoaded } = this.state
-
-    console.log(this.props)
+    const { filmOrCharLoaded, filmOrChar, details, detailsLoaded } = this.props
     return (
       <div className="Details" ref="detailsRef">
         <div className="details-card"
@@ -109,32 +52,32 @@ class Details extends Component {
                   {minHeight: "325px"}
               }
             >
-              { type === "people" && loaded &&
+              { type === "people" && filmOrCharLoaded &&
             <ul className="details-list">
               <li className="details-list-item">
-                Birth Year: {result[0].birth_year}
+                Birth Year: {filmOrChar[0].birth_year}
               </li>
               <li className="details-list-item">
-                Gender: {result[0].gender}</li>
+                Gender: {filmOrChar[0].gender}</li>
               <li className="details-list-item">
-                Eye Color: {result[0].birth_year}
+                Eye Color: {filmOrChar[0].birth_year}
               </li>
               <li className="details-list-item">
-                Hair Color: {result[0].eye_color}
+                Hair Color: {filmOrChar[0].eye_color}
               </li>
               <li className="details-list-item">
-                Height: {result[0].hair_color}
+                Height: {filmOrChar[0].hair_color}
               </li>
               <li className="details-list-item">
-                Mass: {result[0].mass}
+                Mass: {filmOrChar[0].mass}
               </li>
             </ul>
 
-              || loaded &&
+              || filmOrCharLoaded &&
               <div className="opening-crawl-text">
-                <div>{ result[0].opening_crawl } </div>
+                <div>{ filmOrChar[0].opening_crawl } </div>
               </div>
-              || !loaded &&
+              || !filmOrCharLoaded &&
               <div className="details-loading">
                 <p className="loading-text">Loading...</p> 
               </div>
@@ -167,7 +110,7 @@ class Details extends Component {
                 details.map((detail, i) => {
                   return (
                     <Link 
-                      to={`/${type === "people" ? "films" : "people"}/${detail}`} key={detail}
+                      to={`/${type === "people" ? "films" : "people"}/${detail}`} key={ i }
                     >
                       {detail}{i == details.length - 1 ? "" : ", "}
                     </Link>
@@ -186,7 +129,7 @@ class Details extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     filmOrChar: state.filmOrChar,
     filmOrCharLoaded: state.filmOrCharLoaded,
@@ -195,12 +138,21 @@ function mapStateToProps(state) {
   };
 }
   
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchData: (type, id) => {
       const action = fetchData(type, id);
       dispatch(action);
-    }
+    },
+    setDetailsLoaded: (bool) => {
+      const action = setDetailsLoaded(bool);
+      dispatch(action);
+    },
+    dataLoaded: (bool) => {
+      const action = dataLoaded(bool);
+      dispatch(action);
+    },
+
   }
 }
 
