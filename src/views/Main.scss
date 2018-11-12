@@ -141,17 +141,15 @@
       }
       .resutls-feedback-container {
         text-align: center;
-        margin-left: 129px;
-        margin-top: 174px;
-        width: 324px;
-        height: 35px;
+        display: flex;
+        justify-content: center;
+        margin-top: 212px;
+        width: 100%;
         font-size: 14px;
         font-weight: bold;
         color: #c4c4c4;
-        @media screen and (max-width: 720px) {
-          width: 150px;
-         }
       } 
+    
       @media screen and (max-width: 720px) {
        width: 410px;
        overflow-x: hidden;
@@ -164,6 +162,9 @@
       align-items: center;
       .search-div {
         margin-left: -142px;
+        margin-bottom: 30px;
+      }
+      .results-div {
         margin-bottom: 30px;
       }
     }

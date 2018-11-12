@@ -10,7 +10,6 @@
   justify-content: center;
   overflow-y: hidden;
   .details-card {
-    box-sizing: content-box;
     margin-top: 80px;
     width: 804px;
     border-radius: 4px;
@@ -21,6 +20,9 @@
     .details-card-left {
       width: 322px;
       margin-left: 30px;
+      @media screen and (max-width: 960px) {
+        margin-left: 0px;
+      }
       .result-name {
         margin-top: 30px;
         height: 22px;
@@ -41,8 +43,8 @@
       }
       .details-wrapper {
         margin-top: 16px;
+        min-height: 206px;
         .details-list {
-          height: 101px;
           list-style: none;
           padding: 0;
           .details-list-item {
@@ -55,16 +57,15 @@
           } 
         }
         .opening-crawl-text {
+
           white-space: pre-line;
           width: 220px;
-          
           font-size: 14px;
           font-weight: normal;
           color: #000000;
         }
       }
       .details-loading {
-        min-height: 328px;
         text-align: left;
         font-size: 14px;
         font-weight: bold;
@@ -72,7 +73,7 @@
       }
       .back-to-search-button {
         margin-top: 30px;
-        // margin-bottom: 30px;
+        margin-bottom: 30px;
         font-size: 14px;
         font-weight: bold;
         color: #ffffff;
@@ -95,10 +96,14 @@
       margin-left: 100px;
       margin-right: 30px;
       width: 132px;
-      // height: 18px;
       font-size: 14px;
       font-weight: bold;
       color: #ffffff;
+      @media screen and (max-width: 960px) {
+        margin-left: -160px;
+        margin-top: -60px;
+        margin-bottom: 30px;
+      }
       .details-right {
         margin-top: 70px;
         width: 322px;
@@ -123,6 +128,13 @@
           color: #c4c4c4; 
         }
       }
+    }
+    @media screen and (max-width: 960px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 422px;
+      margin-bottom: 30px;
     }
   }
 }
