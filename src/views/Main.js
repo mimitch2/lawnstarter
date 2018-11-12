@@ -44,7 +44,13 @@ class Main extends Component {
   }
 
   handleInput = (e) => {
-    this.setState({input: e.target.value})
+    const input = e.target.value
+    this.setState({input: input})
+    if (input.length === 0) {
+      this.setState({
+        result: []
+      })
+    }
   }
 
   render() {
