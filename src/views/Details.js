@@ -79,8 +79,6 @@ class Details extends Component {
     const { id, type } = this.props.match.params
     const { loaded, result, details, detailsLoaded, show } = this.state
     return (
-
-
       <div className="Details">
         <CSSTransition
           in={this.state.show}
