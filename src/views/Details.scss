@@ -10,6 +10,10 @@
   justify-content: center;
   overflow-y: hidden;
   .details-card {
+    overflow: hidden;
+    height: auto;
+    max-height: 800px;
+    transition: .5s ease-in-out;
     margin-top: 80px;
     width: 804px;
     border-radius: 4px;
@@ -57,7 +61,6 @@
           } 
         }
         .opening-crawl-text {
-
           white-space: pre-line;
           width: 220px;
           font-size: 14px;

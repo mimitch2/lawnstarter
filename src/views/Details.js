@@ -96,7 +96,7 @@ class Details extends Component {
               style ={
                 type === "people" ?
                   {height: "101px"} :
-                  null
+                  {minHeight: "206px"}
               }
             >
               { type === "people" && loaded &&
@@ -122,7 +122,7 @@ class Details extends Component {
 
               || loaded &&
               <div className="opening-crawl-text">
-                <div>{ result[0].opening_crawl } </div>
+                { result[0].opening_crawl } 
               </div>
               || !loaded &&
               <div className="details-loading">
