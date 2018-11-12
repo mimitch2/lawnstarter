@@ -42,16 +42,13 @@ class Main extends Component {
   }
 
   handleRadio = ( type ) => {
-    this.setState({searchType: type})
-   
+    this.setState({searchType: type})   
     this.setState({
       placeholder: type === "people" ? "e.g. Chewbacca, Yoda, Boba Fett" :
         "e.g. A New Hope, Phantom Menace",
       result: [],
       input: ''
-    })
-
-          
+    })        
   }
 
   handleInput = (e) => {
